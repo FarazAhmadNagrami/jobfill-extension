@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=380">
+  <title>JobFill</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">⚡</div>
+      <span class="logo-name">JobFill</span>
+      <span class="logo-badge">AI</span>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="btnDashboard" title="Open Dashboard">📊</button>
+      <button class="icon-btn" id="btnOptions" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <!-- Page Status Bar -->
+  <div class="status-bar">
+    <div class="status-indicator">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">Checking page...</span>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <span class="status-platform" id="platformBadge" style="display:none"></span>
+      <div class="match-badge loading" id="matchBadge" style="display:none">
+        <div class="spinner" style="width:10px;height:10px;border-width:1.5px"></div>
+        <span>Analyzing...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="fill">
+      <span class="tab-icon">✏</span> Fill
+    </button>
+    <button class="tab-btn" data-tab="tracker">
+      <span class="tab-icon">📋</span> Tracker
+    </button>
+    <button class="tab-btn" data-tab="settings">
+      <span class="tab-icon">⚙</span> Settings
+    </button>
+  </nav>
+
+  <!-- ═══ TAB: FILL ═══ -->
+  <div id="tab-fill" class="tab-content active">
+    <div class="scroll-content">
+
+      <!-- Profile Completion -->
+      <div class="section">
+        <div class="profile-completion">
+          <div class="completion-header">
+            <span class="completion-label">Profile Completion</span>
+            <span class="completion-pct" id="completionPct">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Save Application Prompt -->
+      <div class="save-app-prompt" id="saveAppPrompt">
+        <div class="save-app-prompt-text">
+          Save <strong id="saveAppName">this job</strong> to tracker?
+        </div>
+        <button class="btn btn-primary btn-sm" id="btnSaveApp">Save</button>
+      </div>
+
+      <!-- Auto Fill Button -->
+      <div class="section">
+        <div class="section-label">Form Actions</div>
+        <button class="btn btn-primary" id="btnFill" style="font-size:14px;padding:12px;">
+          ⚡ Auto Fill Form
+        </button>
+        <div class="btn-row">
+          <button class="btn btn-secondary" id="btnPreviewFields">👁 Preview Fields</button>
+          <button class="btn btn-secondary" id="btnClearFill">✕ Clear</button>
+        </div>
+      </div>
+
+      <!-- AI Cover Letter -->
+      <div class="section">
+        <div class="section-label">AI Cover Letter</div>
+        <button class="btn btn-outline" id="btnGenCoverLetter">
+          ✨ Generate Cover Letter
+        </button>
+        <div class="cover-letter-container" id="coverLetterContainer" style="display:none">
+          <div class="cover-letter-preview" id="coverLetterText">
+            <div class="cover-letter-placeholder">Your cover letter will appear here...</div>
+          </div>
+          <div class="copy-btn-overlay">
+            <button class="btn btn-secondary btn-sm" id="btnCopyCoverLetter">📋 Copy</button>
+          </div>
+          <div class="btn-row" style="margin-top:8px">
+            <button class="btn btn-secondary btn-sm" id="btnRegenCoverLetter">↻ Regenerate</button>
+            <button class="btn btn-secondary btn-sm" id="btnClearCoverLetter">✕ Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job Analysis -->
+      <div class="analysis-panel" id="analysisPanel">
+        <div class="section-label" style="margin-bottom:10px">Job Analysis</div>
+        <div id="analysisContent"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ TAB: TRACKER ═══ -->
+  <div id="tab-tracker" class="tab-content">
+    <div class="scroll-content">
+      <div class="tracker-header">
+        <div class="section-label" style="margin:0">Recent Applications</div>
+        <button class="btn btn-primary btn-sm" id="btnViewAll">View All →</button>
+      </div>
+      <div id="appsList" class="apps-list">
+        <div class="empty-state">
+          <div class="empty-state-icon">📭</div>
+          <h3>No applications yet</h3>
+          <p>Fill a form to start tracking</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: SETTINGS ═══ -->
+  <div id="tab-settings" class="tab-content">
+    <div class="scroll-content">
+
+      <div class="section-label">Configuration</div>
+
+      <div class="settings-item">
+        <div class="settings-item-info">
+          <span class="settings-item-label">Groq API Key</span>
+          <span class="settings-item-desc">Required for AI features</span>
+        </div>
+        <div class="api-status disconnected" id="apiStatus">Not Set</div>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-info">
+          <span class="settings-item-label">Profile</span>
+          <span class="settings-item-desc" id="profileStatusDesc">Not configured</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btnEditProfile">Edit →</button>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-info">
+          <span class="settings-item-label">Follow-up Reminder</span>
+          <span class="settings-item-desc" id="followUpDesc">After 7 days</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btnSettingsPage">Configure</button>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-info">
+          <span class="settings-item-label">Dashboard</span>
+          <span class="settings-item-desc">View all applications & stats</span>
+        </div>
+        <button class="btn btn-primary btn-sm" id="btnOpenDashboard2">Open →</button>
+      </div>
+
+      <div style="margin-top:16px">
+        <div class="section-label">Data</div>
+        <div class="btn-row">
+          <button class="btn btn-secondary btn-sm" id="btnExportData">Export JSON</button>
+          <button class="btn btn-secondary btn-sm" id="btnClearData" style="color:var(--error);border-color:var(--error)">Clear All</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

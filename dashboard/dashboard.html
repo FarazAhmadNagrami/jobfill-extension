@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobFill Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <span class="logo-name">JobFill</span>
+        <span class="logo-badge">Dashboard</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" id="btnExportCSV">⬇ Export CSV</button>
+        <button class="btn btn-secondary" id="btnExportJSON">⬇ Export JSON</button>
+        <button class="btn btn-primary" id="btnOpenOptions">⚙ Settings</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stats-inner">
+      <div class="stat-card" style="border-color:rgba(255,255,255,0.05)">
+        <div class="stat-label">Total Applied</div>
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-trend" id="statTotalTrend">this week</div>
+      </div>
+      <div class="stat-card applied">
+        <div class="stat-label">Active</div>
+        <div class="stat-value" id="statApplied">0</div>
+        <div class="stat-trend">awaiting response</div>
+      </div>
+      <div class="stat-card interview">
+        <div class="stat-label">Interviews</div>
+        <div class="stat-value" id="statInterview">0</div>
+        <div class="stat-trend">in progress</div>
+      </div>
+      <div class="stat-card offer">
+        <div class="stat-label">Offers</div>
+        <div class="stat-value" id="statOffer">0</div>
+        <div class="stat-trend">received</div>
+      </div>
+      <div class="stat-card rate">
+        <div class="stat-label">Response Rate</div>
+        <div class="stat-value" id="statRate">0%</div>
+        <div class="stat-trend">interview / applied</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="container">
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" type="text" id="searchInput" placeholder="Search company or role...">
+        </div>
+        <select class="sort-select" id="sortSelect">
+          <option value="date">Sort: Date</option>
+          <option value="company">Sort: Company</option>
+          <option value="status">Sort: Status</option>
+          <option value="matchScore">Sort: Match Score</option>
+        </select>
+      </div>
+      <div class="toolbar-right">
+        <span id="resultsCount" style="font-size:12px;color:#6b7280"></span>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">All <span class="filter-count" id="countAll">0</span></button>
+      <button class="filter-tab" data-filter="applied">Applied <span class="filter-count" id="countApplied">0</span></button>
+      <button class="filter-tab" data-filter="interview">Interview <span class="filter-count" id="countInterview">0</span></button>
+      <button class="filter-tab" data-filter="offer">Offer <span class="filter-count" id="countOffer">0</span></button>
+      <button class="filter-tab" data-filter="rejected">Rejected <span class="filter-count" id="countRejected">0</span></button>
+      <button class="filter-tab" data-filter="ghosted">Ghosted <span class="filter-count" id="countGhosted">0</span></button>
+    </div>
+
+    <!-- Jobs Grid -->
+    <div class="jobs-grid" id="jobsGrid">
+      <!-- Job cards rendered by JS -->
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobFill Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <span class="logo-name">JobFill</span>
+      </div>
+      <div class="logo-version">v1.0 · Settings</div>
+    </div>
+
+    <div class="sidebar-profile">
+      <div class="profile-meta">
+        <span class="profile-meta-name" id="sidebarName">Your Name</span>
+      </div>
+      <div class="progress-mini">
+        <div class="progress-bar-mini">
+          <div class="progress-fill-mini" id="sidebarProgress" style="width:0%"></div>
+        </div>
+        <span class="progress-pct" id="sidebarPct">0%</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Profile</div>
+      <button class="nav-item active" data-section="personal">
+        <span class="nav-icon">👤</span> Personal Info
+      </button>
+      <button class="nav-item" data-section="professional">
+        <span class="nav-icon">💼</span> Professional
+      </button>
+      <button class="nav-item" data-section="skills">
+        <span class="nav-icon">🛠</span> Skills
+      </button>
+      <button class="nav-item" data-section="resume">
+        <span class="nav-icon">📄</span> Resume
+      </button>
+      <div class="nav-section-label" style="margin-top:12px">Settings</div>
+      <button class="nav-item" data-section="ai">
+        <span class="nav-icon">✨</span> AI Settings
+      </button>
+      <button class="nav-item" data-section="preferences">
+        <span class="nav-icon">⚙</span> Preferences
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-link" id="btnOpenDashboard">
+        📊 Open Dashboard
+      </button>
+      <button class="sidebar-link" id="btnExportProfile">
+        ⬇ Export Data
+      </button>
+      <button class="sidebar-link" id="btnImportProfile">
+        ⬆ Import Data
+      </button>
+      <input type="file" id="importFileInput" accept=".json" style="display:none">
+    </div>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main class="main">
+
+    <!-- ══════════ PERSONAL INFO ══════════ -->
+    <section id="section-personal" class="section-view active">
+      <div class="main-header">
+        <div class="main-title">👤 Personal Information</div>
+        <div class="main-subtitle">Basic contact details used to fill job application forms</div>
+      </div>
+      <div class="main-content">
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon blue">👤</div>
+            Name & Contact
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name <span class="required-star">*</span></label>
+              <input type="text" id="firstName" placeholder="John" autocomplete="given-name">
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="required-star">*</span></label>
+              <input type="text" id="lastName" placeholder="Doe" autocomplete="family-name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email Address <span class="required-star">*</span></label>
+              <div class="input-with-icon">
+                <span class="input-icon">✉</span>
+                <input type="email" id="email" placeholder="john@example.com" autocomplete="email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <div class="input-with-icon">
+                <span class="input-icon">📞</span>
+                <input type="tel" id="phone" placeholder="+1 (555) 000-0000" autocomplete="tel">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Location (City, State/Country)</label>
+            <div class="input-with-icon">
+              <span class="input-icon">📍</span>
+              <input type="text" id="location" placeholder="San Francisco, CA" autocomplete="address-level2">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon blue">🔗</div>
+            Social & Portfolio Links
+          </div>
+          <div class="form-group">
+            <label>LinkedIn URL</label>
+            <div class="input-with-icon">
+              <span class="input-icon">💼</span>
+              <input type="url" id="linkedin" placeholder="https://linkedin.com/in/yourprofile" autocomplete="url">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>GitHub URL</label>
+            <div class="input-with-icon">
+              <span class="input-icon">💻</span>
+              <input type="url" id="github" placeholder="https://github.com/yourhandle" autocomplete="url">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Portfolio / Website</label>
+            <div class="input-with-icon">
+              <span class="input-icon">🌐</span>
+              <input type="url" id="portfolio" placeholder="https://yourportfolio.com" autocomplete="url">
+            </div>
+          </div>
+        </div>
+
+        <div class="save-bar">
+          <span class="save-bar-status" id="saveStatus-personal"></span>
+          <button class="btn btn-primary btn-lg" id="savePersonal">Save Personal Info</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ PROFESSIONAL ══════════ -->
+    <section id="section-professional" class="section-view">
+      <div class="main-header">
+        <div class="main-title">💼 Professional Details</div>
+        <div class="main-subtitle">Work details used for professional fields in job applications</div>
+      </div>
+      <div class="main-content">
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon purple">💼</div>
+            Current Position
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Current Job Title</label>
+              <input type="text" id="currentTitle" placeholder="Senior Software Engineer">
+            </div>
+            <div class="form-group">
+              <label>Current Company</label>
+              <input type="text" id="currentCompany" placeholder="Acme Corp" autocomplete="organization">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Years of Experience</label>
+              <select id="experience">
+                <option value="">Select...</option>
+                <option value="0-1">Less than 1 year</option>
+                <option value="1-2">1-2 years</option>
+                <option value="2-3">2-3 years</option>
+                <option value="3-5">3-5 years</option>
+                <option value="5-7">5-7 years</option>
+                <option value="7-10">7-10 years</option>
+                <option value="10+">10+ years</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Work Authorization</label>
+              <select id="workAuth">
+                <option value="">Select...</option>
+                <option value="US Citizen">US Citizen</option>
+                <option value="Green Card">Green Card / PR</option>
+                <option value="H1B">H-1B Visa</option>
+                <option value="OPT">OPT</option>
+                <option value="TN Visa">TN Visa</option>
+                <option value="EU Citizen">EU Citizen</option>
+                <option value="Other Visa">Other Visa</option>
+                <option value="No sponsorship needed">No Sponsorship Needed</option>
+                <option value="Sponsorship required">Sponsorship Required</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon green">📅</div>
+            Availability & Compensation
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Notice Period</label>
+              <select id="noticePeriod">
+                <option value="">Select...</option>
+                <option value="Immediate">Immediately Available</option>
+                <option value="1 week">1 Week</option>
+                <option value="2 weeks">2 Weeks</option>
+                <option value="1 month">1 Month</option>
+                <option value="2 months">2 Months</option>
+                <option value="3 months">3 Months</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Expected Salary</label>
+              <div class="input-with-icon">
+                <span class="input-icon">💰</span>
+                <input type="text" id="expectedSalary" placeholder="$120,000/year">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Work Preference</label>
+            <select id="workPreference">
+              <option value="">Select...</option>
+              <option value="Remote">Remote</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="On-site">On-site</option>
+              <option value="Flexible">Flexible</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="save-bar">
+          <span class="save-bar-status" id="saveStatus-professional"></span>
+          <button class="btn btn-primary btn-lg" id="saveProfessional">Save Professional Info</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ SKILLS ══════════ -->
+    <section id="section-skills" class="section-view">
+      <div class="main-header">
+        <div class="main-title">🛠 Skills</div>
+        <div class="main-subtitle">Your technical and professional skills for AI cover letter generation</div>
+      </div>
+      <div class="main-content">
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon yellow">🛠</div>
+            Your Skills
+          </div>
+
+          <div class="skills-container" id="skillsContainer">
+            <div class="skills-tags" id="skillsTags"></div>
+            <div class="skill-input-row">
+              <input class="skill-input" type="text" id="skillInput" placeholder="Add a skill (e.g., React, Python)..." maxlength="50">
+              <button class="skill-add-btn" id="btnAddSkill">+ Add</button>
+            </div>
+          </div>
+
+          <div style="margin-top:14px">
+            <label style="margin-bottom:8px">Quick Add (click to add)</label>
+            <div class="skill-suggestions" id="skillSuggestions">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="save-bar">
+          <span class="save-bar-status" id="saveStatus-skills"></span>
+          <button class="btn btn-primary btn-lg" id="saveSkills">Save Skills</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ RESUME ══════════ -->
+    <section id="section-resume" class="section-view">
+      <div class="main-header">
+        <div class="main-title">📄 Resume</div>
+        <div class="main-subtitle">Upload your resume for auto-fill and AI cover letter personalization</div>
+      </div>
+      <div class="main-content">
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon red">📄</div>
+            Upload Resume
+          </div>
+
+          <!-- Dropzone -->
+          <div class="resume-dropzone" id="resumeDropzone">
+            <div class="resume-dropzone-icon">📁</div>
+            <div class="resume-dropzone-title">Drop your resume here</div>
+            <div class="resume-dropzone-subtitle">PDF, DOC, DOCX · Max 5MB</div>
+            <input type="file" id="resumeFileInput" accept=".pdf,.doc,.docx" style="display:none">
+          </div>
+
+          <!-- Preview (shows after upload) -->
+          <div class="resume-preview" id="resumePreview">
+            <div class="resume-icon">📄</div>
+            <div class="resume-info">
+              <div class="resume-filename" id="resumeFilename">resume.pdf</div>
+              <div class="resume-size" id="resumeFilesize">2.1 MB</div>
+            </div>
+            <button class="resume-remove-btn" id="btnRemoveResume">Remove</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon green">✍</div>
+            Professional Summary
+          </div>
+          <div class="form-group">
+            <label>Summary / Bio</label>
+            <textarea id="resumeSummary" placeholder="Brief professional summary for AI cover letter generation. Highlight your key achievements, specializations, and career goals. This helps generate more personalized cover letters." style="min-height:120px"></textarea>
+            <div class="summary-hint">This is fed directly to the AI when generating cover letters. Be specific about your experience, achievements, and what makes you unique.</div>
+          </div>
+        </div>
+
+        <div class="save-bar">
+          <span class="save-bar-status" id="saveStatus-resume"></span>
+          <button class="btn btn-primary btn-lg" id="saveResume">Save Resume Info</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ AI SETTINGS ══════════ -->
+    <section id="section-ai" class="section-view">
+      <div class="main-header">
+        <div class="main-title">✨ AI Settings</div>
+        <div class="main-subtitle">Configure Groq API for AI cover letters and job analysis</div>
+      </div>
+      <div class="main-content">
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon blue">🔑</div>
+            Groq API Key
+          </div>
+
+          <div class="form-group">
+            <label>API Key</label>
+            <div class="api-key-wrapper">
+              <input type="password" id="groqApiKey" placeholder="gsk_...">
+              <button class="api-key-toggle" id="toggleApiKey" type="button">👁</button>
+            </div>
+            <div class="api-status-row">
+              <div class="api-chip loading" id="apiStatusChip">Not configured</div>
+              <button class="btn btn-secondary" id="btnTestApi" style="font-size:12px;padding:5px 12px">Test Key</button>
+            </div>
+            <div class="field-hint" style="margin-top:8px">
+              Get your free API key at <strong style="color:#9ca3af">console.groq.com</strong> → API Keys → Create New Key<br>
+              The key is stored locally and never sent anywhere except Groq's servers.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon purple">🤖</div>
+            AI Model Settings
+          </div>
+
+          <div class="form-group">
+            <label>Cover Letter Model</label>
+            <select id="coverLetterModel">
+              <option value="llama-3.3-70b-versatile" selected>Llama 3.3 70B (Recommended)</option>
+              <option value="llama-3.1-8b-instant">Llama 3.1 8B (Faster)</option>
+              <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+            </select>
+            <div class="field-hint">Llama 3.3 70B produces the best cover letters. Use 8B for faster generation.</div>
+          </div>
+
+          <div class="form-group">
+            <label>Cover Letter Length</label>
+            <select id="coverLetterLength">
+              <option value="short">Short (150 words)</option>
+              <option value="medium" selected>Medium (250 words)</option>
+              <option value="long">Long (350 words)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Writing Tone</label>
+            <select id="writingTone">
+              <option value="professional">Professional</option>
+              <option value="conversational" selected>Professional & Conversational</option>
+              <option value="enthusiastic">Enthusiastic</option>
+              <option value="formal">Formal</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="save-bar">
+          <span class="save-bar-status" id="saveStatus-ai"></span>
+          <button class="btn btn-primary btn-lg" id="saveAI">Save AI Settings</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ PREFERENCES ══════════ -->
+    <section id="section-preferences" class="section-view">
+      <div class="main-header">
+        <div class="main-title">⚙ Preferences</div>
+        <div class="main-subtitle">Customize how JobFill behaves</div>
+      </div>
+      <div class="main-content">
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon yellow">🔔</div>
+            Follow-up Reminders
+          </div>
+
+          <div class="form-group">
+            <label>Send reminder after (days)</label>
+            <input type="number" id="followUpDays" value="7" min="1" max="90" style="width:120px">
+            <div class="field-hint">JobFill will remind you to follow up if you haven't heard back after this many days.</div>
+          </div>
+
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <span class="toggle-label">Enable follow-up notifications</span>
+              <span class="toggle-desc">Get desktop notifications for pending applications</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="enableNotifications" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="card-icon blue">⚡</div>
+            Auto-fill Behavior
+          </div>
+
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <span class="toggle-label">Show bubble on job pages</span>
+              <span class="toggle-desc">Display a notification when a form is detected</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="showBubble" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <span class="toggle-label">Highlight filled fields</span>
+              <span class="toggle-desc">Briefly highlight fields after auto-filling</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="highlightFields" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <span class="toggle-label">Auto-analyze job descriptions</span>
+              <span class="toggle-desc">Automatically run AI analysis when popup opens</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="autoAnalyze" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card" style="border-color:rgba(239,68,68,0.2)">
+          <div class="card-title">
+            <div class="card-icon red">🗑</div>
+            Danger Zone
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-secondary" id="btnClearApplications">Clear Applications</button>
+            <button class="btn btn-danger" id="btnClearAll">Reset All Data</button>
+          </div>
+        </div>
+
+        <div class="save-bar">
+          <span class="save-bar-status" id="saveStatus-preferences"></span>
+          <button class="btn btn-primary btn-lg" id="savePreferences">Save Preferences</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="options.js"></script>
+</body>
+</html>
