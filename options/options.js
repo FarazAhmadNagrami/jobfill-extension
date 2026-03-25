@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupApiKeyToggle();
   setupSaveButtons();
   setupOtherButtons();
+  setupResumeModal();
   renderSkillSuggestions();
   populateForm();
   updateSidebarProgress();
@@ -207,6 +208,8 @@ function setupResumeUpload() {
     const file = fileInput.files?.[0];
     if (file) processResumeFile(file);
   });
+
+  $('btnPreviewResume').addEventListener('click', () => openResumeModal());
 
   $('btnRemoveResume').addEventListener('click', () => {
     resumeData = null;
@@ -556,6 +559,72 @@ function exportData() {
     a.download = `jobfill-backup-${new Date().toISOString().split('T')[0]}.json`;
     a.click();
     URL.revokeObjectURL(url);
+  });
+}
+
+// ─── Resume Preview Modal ─────────────────────────────────────────────────────
+function openResumeModal() {
+  const data = resumeData || profile?.resume;
+  if (!data?.fileData) {
+    showToast('No resume uploaded yet', 'error');
+    return;
+  }
+
+  const modal = $('resumeModal');
+  const iframe = $('resumeIframe');
+  const fallback = $('resumeModalFallback');
+  const filename = data.fileName || 'resume.pdf';
+  const isPDF = filename.toLowerCase().endsWith('.pdf') || data.fileType === 'application/pdf';
+
+  $('modalFilename').textContent = filename;
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  if (isPDF) {
+    // Use the base64 data URL directly in the iframe
+    iframe.style.display = 'block';
+    fallback.style.display = 'none';
+    iframe.src = data.fileData;
+  } else {
+    // DOC/DOCX — browser can't render these natively, show download option
+    iframe.style.display = 'none';
+    fallback.style.display = 'flex';
+    $('btnFallbackDownload').onclick = () => downloadResume(data);
+  }
+
+  // Download button in header
+  $('btnModalDownload').onclick = () => downloadResume(data);
+}
+
+function closeResumeModal() {
+  const modal = $('resumeModal');
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+  // Clear iframe src to stop rendering and free memory
+  $('resumeIframe').src = '';
+}
+
+function downloadResume(data) {
+  const link = document.createElement('a');
+  link.href = data.fileData;
+  link.download = data.fileName || 'resume.pdf';
+  link.click();
+}
+
+function setupResumeModal() {
+  // Close on X button
+  $('btnModalClose').addEventListener('click', closeResumeModal);
+
+  // Close on backdrop click
+  $('resumeModal').addEventListener('click', (e) => {
+    if (e.target.id === 'resumeModal') closeResumeModal();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && $('resumeModal').style.display !== 'none') {
+      closeResumeModal();
+    }
   });
 }
 
